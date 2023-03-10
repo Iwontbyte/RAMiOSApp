@@ -26,6 +26,7 @@
 		6CAA9A9C29B9EC1300342083 /* RMCharacterLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAA9A9B29B9EC1300342083 /* RMCharacterLocation.swift */; };
 		6CAA9A9E29B9ECD500342083 /* RMCharacterStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAA9A9D29B9ECD500342083 /* RMCharacterStatus.swift */; };
 		6CAA9AA029B9ED3300342083 /* RMCharacterGender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAA9A9F29B9ED3300342083 /* RMCharacterGender.swift */; };
+		6CCF353A29BAE0C0006DA59E /* RMGetAllCharactersResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCF353929BAE0C0006DA59E /* RMGetAllCharactersResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		6CAA9A9B29B9EC1300342083 /* RMCharacterLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMCharacterLocation.swift; sourceTree = "<group>"; };
 		6CAA9A9D29B9ECD500342083 /* RMCharacterStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMCharacterStatus.swift; sourceTree = "<group>"; };
 		6CAA9A9F29B9ED3300342083 /* RMCharacterGender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMCharacterGender.swift; sourceTree = "<group>"; };
+		6CCF353929BAE0C0006DA59E /* RMGetAllCharactersResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMGetAllCharactersResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,13 +108,8 @@
 		6C2E7A3429B9BE730031C286 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				6CAA9A9729B9DE4F00342083 /* RMCharacter.swift */,
-				6CAA9A9529B9DE4000342083 /* RMLocation.swift */,
-				6CAA9A9329B9DE3400342083 /* RMEpisode.swift */,
-				6CAA9A9929B9EBCD00342083 /* RMOrigin.swift */,
-				6CAA9A9B29B9EC1300342083 /* RMCharacterLocation.swift */,
-				6CAA9A9D29B9ECD500342083 /* RMCharacterStatus.swift */,
-				6CAA9A9F29B9ED3300342083 /* RMCharacterGender.swift */,
+				6CCF353829BADDCA006DA59E /* APIResponseTypes */,
+				6CCF353729BADDB3006DA59E /* DataTyps */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -152,6 +149,28 @@
 				6C2E7A3F29B9BFBE0031C286 /* RMSettingViewController.swift */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		6CCF353729BADDB3006DA59E /* DataTyps */ = {
+			isa = PBXGroup;
+			children = (
+				6CAA9A9729B9DE4F00342083 /* RMCharacter.swift */,
+				6CAA9A9529B9DE4000342083 /* RMLocation.swift */,
+				6CAA9A9329B9DE3400342083 /* RMEpisode.swift */,
+				6CAA9A9929B9EBCD00342083 /* RMOrigin.swift */,
+				6CAA9A9B29B9EC1300342083 /* RMCharacterLocation.swift */,
+				6CAA9A9D29B9ECD500342083 /* RMCharacterStatus.swift */,
+				6CAA9A9F29B9ED3300342083 /* RMCharacterGender.swift */,
+			);
+			path = DataTyps;
+			sourceTree = "<group>";
+		};
+		6CCF353829BADDCA006DA59E /* APIResponseTypes */ = {
+			isa = PBXGroup;
+			children = (
+				6CCF353929BAE0C0006DA59E /* RMGetAllCharactersResponse.swift */,
+			);
+			path = APIResponseTypes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,6 +245,7 @@
 			files = (
 				6CAA9A9A29B9EBCD00342083 /* RMOrigin.swift in Sources */,
 				6C2E7A2429B9B0E00031C286 /* RMTabViewController.swift in Sources */,
+				6CCF353A29BAE0C0006DA59E /* RMGetAllCharactersResponse.swift in Sources */,
 				6CAA9A9E29B9ECD500342083 /* RMCharacterStatus.swift in Sources */,
 				6CAA9AA029B9ED3300342083 /* RMCharacterGender.swift in Sources */,
 				6CAA9A9029B9DC8F00342083 /* RMRequest.swift in Sources */,
@@ -377,9 +397,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = WLFNP8VZXH;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RickandMorty/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -392,6 +412,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "cn.com.fenrir-inc.RickandMorty";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -403,9 +424,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = WLFNP8VZXH;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RickandMorty/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -418,6 +439,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "cn.com.fenrir-inc.RickandMorty";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
