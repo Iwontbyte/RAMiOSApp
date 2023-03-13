@@ -9,23 +9,20 @@ import UIKit
 
 final class RMCharacterViewController: UIViewController {
 
+    private let characterListView = RMCharacterListView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         self.title = "Character"
-        
-        
-        
-        RMService.shared.execute(.listCharactersRequests, expecting: RMGetAllCharactersResponse.self, completion: { result in
-            switch result {
-            case .success(let model):
-                print(String(describing: model.info.count))
-                break
-            case .failure(let error):
-                print(String(describing: error))
-            }
-        })
+        self.view.addSubview(characterListView)
+        NSLayoutConstraint.activate([
+            characterListView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            characterListView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+            characterListView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+            characterListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
     }
     
 

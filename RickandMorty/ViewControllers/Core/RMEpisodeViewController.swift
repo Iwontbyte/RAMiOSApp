@@ -14,17 +14,20 @@ final class RMEpisodeViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         self.title = "Episode"
+        
+        
+        RMService.shared.execute(.listEpisodeRequests, expecting: RMGetAllEpisodesResponse.self, completion: { result in
+            switch result {
+            case .success(let model):
+                print(String(describing: model.results))
+                break
+            case .failure(let error):
+                print(String(describing: error))
+            }
+        })
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+   
 
 }
