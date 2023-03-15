@@ -10,12 +10,13 @@ import Foundation
 
 class RMCharacterCollectionViewCellViewModel {
     
-    
+    public  let characterId: Int
     public  let characterName: String
     private let characterStatus: RMCharacterStatus
     private let characterImageurl: URL?
     
-    init(characterName: String, characterStatus: RMCharacterStatus, characterImageurl: URL?) {
+    init(characterId: Int, characterName: String, characterStatus: RMCharacterStatus, characterImageurl: URL?) {
+        self.characterId = characterId
         self.characterName = characterName
         self.characterStatus = characterStatus
         self.characterImageurl = characterImageurl

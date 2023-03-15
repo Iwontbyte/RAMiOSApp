@@ -10,6 +10,7 @@ import UIKit
 protocol RMCharacterListViewViewModelDelegate: AnyObject {
     func didLoadInintialCharacters()
     func didSelectCharacter(_ character: RMCharacter)
+    func didLoadMoreCharacters(with index:[IndexPath])
 }
 
 
@@ -19,43 +20,70 @@ class RMCharacterListViewViewModel: NSObject {
     
     private var isLoadingMoreCharaters = false
     
+    private var cellViewModel: [RMCharacterCollectionViewCellViewModel] = []
+    
+    private var apiInfo: RMGetAllCharactersResponse.Info? = nil
+    
+    public var shouldShowLoadMoreIndicator: Bool {
+        return apiInfo?.next != nil
+    }
+    
     private var characters: [RMCharacter] = []{
         didSet {
-            for item in characters {
-                let viewModel = RMCharacterCollectionViewCellViewModel(characterName: item.name, characterStatus: item.status, characterImageurl: URL(string: item.image))
+            for item in characters where !cellViewModel.contains(where: { $0.characterId == item.id}){
+                let viewModel = RMCharacterCollectionViewCellViewModel(characterId:item.id, characterName: item.name, characterStatus: item.status, characterImageurl: URL(string: item.image))
                 cellViewModel.append(viewModel)
             }
             
         }
     }
     
-    private var cellViewModel: [RMCharacterCollectionViewCellViewModel] = []
-    
-    private var apiInfo: RMGetAllCharactersResponse.Info? = nil
     
     func fetchCharacters() {
-        RMService.shared.execute(.listCharactersRequests, expecting: RMGetAllCharactersResponse.self, completion: { [weak self]result in
-        switch result {
-        case .success(let response):
-            let result = response.results
-            let info = response.info
-            self?.characters = result
-            self?.apiInfo = info
-            DispatchQueue.main.async {
-                self?.delegate?.didLoadInintialCharacters()
+        RMService.shared.execute(.listCharactersRequests, expecting: RMGetAllCharactersResponse.self, completion: { [weak self] result in
+            switch result {
+            case .success(let response):
+                let result = response.results
+                let info = response.info
+                self?.characters = result
+                self?.apiInfo = info
+                DispatchQueue.main.async {
+                    self?.delegate?.didLoadInintialCharacters()
+                }
+                break
+            case .failure(let error):
+                print(String(describing: error))
             }
-            break
-        case .failure(let error):
-            print(String(describing: error))
-        }
-    })}
+        })}
     
-    public var shouldShowLoadMoreIndicator: Bool {
-        return apiInfo?.next != nil
-    }
+    
     
     public func fetchAddtionalCharacters() {
-
+        guard let nextUrl = URL(string: apiInfo?.next ?? "") else {
+            return
+        }
+        RMService.shared.execute(nextUrl, expecting: RMGetAllCharactersResponse.self, completion: {[weak self] result in
+            guard let self = self else {
+                return
+            }
+            switch result {
+            case .success(let response):
+                self.apiInfo = response.info
+                let moreResult = response.results
+                let originalCount = self.characters.count
+                let newCount = moreResult.count
+                let total = originalCount + newCount
+                let statrIndex = total - newCount
+                let indexPathtoAdd = Array(statrIndex..<(statrIndex + newCount)).compactMap({return IndexPath(row: $0, section: 0)})
+                self.characters.append(contentsOf: moreResult)
+                DispatchQueue.main.async {
+                    self.delegate?.didLoadMoreCharacters(with: indexPathtoAdd )
+                    self.isLoadingMoreCharaters = false
+                }
+            case .failure(let error):
+                print(String(describing: error))
+            }
+        })
     }
 }
 
@@ -87,7 +115,7 @@ extension RMCharacterListViewViewModel:UICollectionViewDelegate, UICollectionVie
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        guard isLoadingMoreCharaters else {
+        guard shouldShowLoadMoreIndicator else {
             return .zero
         }
         return CGSize(width: collectionView.frame.width, height: 100)
@@ -115,9 +143,9 @@ extension RMCharacterListViewViewModel: UIScrollViewDelegate {
         let offset = scrollView.contentOffset.y
         let totalContentHeight = scrollView.contentSize.height
         let totalScrollViewFixedHeight = scrollView.frame.size.height
-        
         if offset > (totalContentHeight - totalScrollViewFixedHeight - 120) {
             isLoadingMoreCharaters = true
+            fetchAddtionalCharacters()
         }
     }
 }

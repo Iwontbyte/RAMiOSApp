@@ -42,6 +42,25 @@ final class RMService {
         task.resume()
     }
     
+    public func execute<T: Codable>(_ url:URL, expecting type: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
+        
+        let task = URLSession.shared.dataTask(with: url, completionHandler: { data, _ ,error in
+            guard let data = data, error == nil else {
+                completion(.failure(error ?? RMServiceError.failToGetData))
+                return
+            }
+            
+            do {
+                let result = try JSONDecoder().decode(type.self, from: data)
+                completion(.success(result))
+            } catch {
+                completion(.failure(error))
+            }
+        })
+        
+        task.resume()
+    }
+    
     private func requeset(from rmRequest: RMRequest) -> URLRequest? {
         guard let url = rmRequest.url else {
             return nil
