@@ -59,9 +59,13 @@ class RMCharacterListViewViewModel: NSObject {
     
     
     public func fetchAddtionalCharacters() {
+        guard !isLoadingMoreCharaters else {
+            return
+        }
         guard let nextUrl = URL(string: apiInfo?.next ?? "") else {
             return
         }
+        isLoadingMoreCharaters = true
         RMService.shared.execute(nextUrl, expecting: RMGetAllCharactersResponse.self, completion: {[weak self] result in
             guard let self = self else {
                 return
@@ -82,6 +86,7 @@ class RMCharacterListViewViewModel: NSObject {
                 }
             case .failure(let error):
                 print(String(describing: error))
+                self.isLoadingMoreCharaters = false
             }
         })
     }
@@ -137,15 +142,18 @@ extension RMCharacterListViewViewModel:UICollectionViewDelegate, UICollectionVie
 
 extension RMCharacterListViewViewModel: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard shouldShowLoadMoreIndicator,!isLoadingMoreCharaters else {
+        guard shouldShowLoadMoreIndicator,!isLoadingMoreCharaters,!cellViewModel.isEmpty,let _ = apiInfo?.next  else {
             return
         }
-        let offset = scrollView.contentOffset.y
-        let totalContentHeight = scrollView.contentSize.height
-        let totalScrollViewFixedHeight = scrollView.frame.size.height
-        if offset > (totalContentHeight - totalScrollViewFixedHeight - 120) {
-            isLoadingMoreCharaters = true
-            fetchAddtionalCharacters()
-        }
+        Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { [weak self] t in
+            let offset = scrollView.contentOffset.y
+            let totalContentHeight = scrollView.contentSize.height
+            let totalScrollViewFixedHeight = scrollView.frame.size.height
+            if offset > (totalContentHeight - totalScrollViewFixedHeight - 120) {
+                self?.fetchAddtionalCharacters()
+            }
+            t.invalidate()
+        })
+        
     }
 }
