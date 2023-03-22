@@ -8,22 +8,20 @@
 import UIKit
 
 final class RMCharacterDetailViewController: UIViewController {
-
-    private let viewModel: RMCharacterDetailViewViewModel
     
     private let characterDetialView = RMCharacterDetailView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.backgroundColor = .systemBackground
-        title = viewModel.title
+        title = characterDetialView.viewModel?.title
     }
     
     init(viewModel: RMCharacterDetailViewViewModel) {
-        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        characterDetialView.viewModel = viewModel
         setupView()
     }
     
@@ -41,6 +39,6 @@ final class RMCharacterDetailViewController: UIViewController {
             characterDetialView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
-   
-
+    
+    
 }

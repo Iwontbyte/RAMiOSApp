@@ -20,4 +20,28 @@ class RMCharacterDetailViewViewModel {
         character.name.uppercased()
     }
     
+    public var name: String {
+        character.name
+    }
+    
+    public var species: String {
+        character.species
+    }
+    
+    public var type: String {
+        character.type
+    }
+    
+    public var status: String {
+        "status: \(character.status)"
+    }
+    
+    public var gender: String {
+        character.gender.rawValue
+    }
+    
+    public var image: String {
+        character.image
+    }
+    
 }

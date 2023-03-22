@@ -11,10 +11,12 @@ class RMCharacterDetailView: UIView {
     
     public weak var delegate: RMCharacterListViewDelegate?
     
+    public var viewModel: RMCharacterDetailViewViewModel?
+
+    
     private let tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        //        tableView.register(RMCharacterCollectionViewCell.self, forCellWithReuseIdentifier: RMCharacterCollectionViewCell.identifier)
         tableView.register(RMCharacterPhotoTableViewCell.self, forCellReuseIdentifier: RMCharacterPhotoTableViewCell.identifier)
         tableView.register(RMCharacterInfoTableViewCell.self, forCellReuseIdentifier: RMCharacterInfoTableViewCell.identifier)
         tableView.register(RMCharacterEpisodeTableViewCell.self, forCellReuseIdentifier: RMCharacterEpisodeTableViewCell.identifier)
@@ -60,15 +62,31 @@ extension RMCharacterDetailView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        if section == 0 {
+            return 1
+        } else {
+            return 3
+        }
+    }
+    
+    
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            return self.frame.height * 0.45
+        } else {
+            return 150
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let characterPhotoViewModel = RMCharacterPhotoTableViewCellViewModel(imageUrl: URL(string: viewModel?.image ?? ""))
         switch indexPath.section{
         case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: RMCharacterPhotoTableViewCell.identifier, for: indexPath) as? RMCharacterPhotoTableViewCell else {
                 return UITableViewCell()
             }
+            cell.configure(with: characterPhotoViewModel)
             return cell
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: RMCharacterInfoTableViewCell.identifier, for: indexPath) as? RMCharacterPhotoTableViewCell else {

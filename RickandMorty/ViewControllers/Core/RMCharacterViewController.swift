@@ -36,7 +36,6 @@ final class RMCharacterViewController: UIViewController {
 
 extension RMCharacterViewController: RMCharacterListViewDelegate {
     func rmCharacterListView(_ characterListView: RMCharacterListView, didSelectCharacter character: RMCharacter) {
-        
         let detialViewModel = RMCharacterDetailViewViewModel(character: character)
         let detialViewController = RMCharacterDetailViewController(viewModel: detialViewModel)
         navigationController?.pushViewController(detialViewController, animated: true)
