@@ -13,10 +13,12 @@ final class RMCharacterDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Do any additional setup after loading the view.
         view.backgroundColor = .systemBackground
         title = characterDetialView.viewModel?.title
+        let button1 = UIBarButtonItem(image: UIImage(systemName: "arrowshape.turn.up.forward"), style: .plain, target: self, action: #selector(self.action))
+        self.navigationItem.rightBarButtonItem  = button1
+        
     }
     
     init(viewModel: RMCharacterDetailViewViewModel) {
@@ -25,7 +27,7 @@ final class RMCharacterDetailViewController: UIViewController {
         setupView()
     }
     
-    
+    //    arrowshape.turn.up.right.fill
     required init?(coder: NSCoder) {
         fatalError("Unsupported.")
     }
@@ -40,5 +42,7 @@ final class RMCharacterDetailViewController: UIViewController {
         ])
     }
     
-    
+    @objc func action() {
+        print("share button")
+    }
 }

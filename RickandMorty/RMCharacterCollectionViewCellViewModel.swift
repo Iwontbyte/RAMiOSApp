@@ -31,7 +31,7 @@ class RMCharacterCollectionViewCellViewModel {
             completion(.failure(URLError(.badURL)))
             return
         }
-        let request = URLRequest(url: url)
+        //        let request = URLRequest(url: url)
         RMImageLoader.shared.downLoadImage(url, completion: completion)
     }
 }

@@ -12,7 +12,7 @@ class RMCharacterDetailView: UIView {
     public weak var delegate: RMCharacterListViewDelegate?
     
     public var viewModel: RMCharacterDetailViewViewModel?
-
+    
     
     private let tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
@@ -36,7 +36,6 @@ class RMCharacterDetailView: UIView {
         fatalError("error")
     }
     
-    
     private func addConstraint() {
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: topAnchor),
@@ -50,8 +49,8 @@ class RMCharacterDetailView: UIView {
     private func setupTabelView() {
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.allowsSelection = false
     }
-    
     
 }
 
@@ -64,8 +63,16 @@ extension RMCharacterDetailView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 1
+        } else if section == 1{
+            if let character = viewModel?.character {
+                let characterInfoViewModel = RMCharacterInfoTableViewCellViewModel(character:character)
+                return characterInfoViewModel.cellInfo.count
+            }
+            return 0
+        } else if section == 2 {
+            return 1
         } else {
-            return 3
+            return 0
         }
     }
     
@@ -73,14 +80,15 @@ extension RMCharacterDetailView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return self.frame.height * 0.45
+            return self.frame.height * 0.5
         } else {
-            return 150
+            return  90
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let characterPhotoViewModel = RMCharacterPhotoTableViewCellViewModel(imageUrl: URL(string: viewModel?.image ?? ""))
+        
         switch indexPath.section{
         case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: RMCharacterPhotoTableViewCell.identifier, for: indexPath) as? RMCharacterPhotoTableViewCell else {
@@ -89,12 +97,16 @@ extension RMCharacterDetailView: UITableViewDelegate, UITableViewDataSource {
             cell.configure(with: characterPhotoViewModel)
             return cell
         case 1:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: RMCharacterInfoTableViewCell.identifier, for: indexPath) as? RMCharacterPhotoTableViewCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: RMCharacterInfoTableViewCell.identifier, for: indexPath) as? RMCharacterInfoTableViewCell else {
                 return UITableViewCell()
+            }
+            if let character = viewModel?.character {
+                let characterInfoViewModel = RMCharacterInfoTableViewCellViewModel(character:character)
+                cell.configure(with: characterInfoViewModel.cellInfo[indexPath.row])
             }
             return cell
         case 2:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: RMCharacterEpisodeTableViewCell.identifier, for: indexPath) as? RMCharacterPhotoTableViewCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: RMCharacterEpisodeTableViewCell.identifier, for: indexPath) as? RMCharacterEpisodeTableViewCell else {
                 return UITableViewCell()
             }
             return cell

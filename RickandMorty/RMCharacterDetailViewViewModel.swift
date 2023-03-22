@@ -9,7 +9,7 @@ import Foundation
 
 class RMCharacterDetailViewViewModel {
     
-    private let character:RMCharacter
+    public let character:RMCharacter
     
     
     init(character: RMCharacter) {
