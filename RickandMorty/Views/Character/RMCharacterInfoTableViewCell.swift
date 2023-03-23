@@ -65,7 +65,7 @@ class RMCharacterInfoTableViewCell: UITableViewCell {
             cardView.heightAnchor.constraint(equalTo: contentView.heightAnchor,multiplier: 0.9),
             cardView.leftAnchor.constraint(equalTo: contentView.leftAnchor,constant: 15),
             cardView.rightAnchor.constraint(equalTo: contentView.rightAnchor,constant: -15),
-            cardView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            cardView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: -5),
             
             icon.widthAnchor.constraint(equalToConstant: 35),
             icon.heightAnchor.constraint(equalToConstant: 35),
@@ -77,7 +77,7 @@ class RMCharacterInfoTableViewCell: UITableViewCell {
             title.centerYAnchor.constraint(equalTo: cardView.centerYAnchor),
             
             value.leftAnchor.constraint(equalTo: title.rightAnchor, constant: 10),
-            value.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10),
+            value.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20),
             value.centerYAnchor.constraint(equalTo: cardView.centerYAnchor),
             
         ])

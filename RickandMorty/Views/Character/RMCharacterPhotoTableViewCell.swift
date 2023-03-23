@@ -37,7 +37,7 @@ class RMCharacterPhotoTableViewCell: UITableViewCell {
             detailImageView.topAnchor.constraint(equalTo: topAnchor),
             detailImageView.leftAnchor.constraint(equalTo: leftAnchor,constant: 15),
             detailImageView.rightAnchor.constraint(equalTo: rightAnchor,constant: -15),
-            detailImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            detailImageView.bottomAnchor.constraint(equalTo: bottomAnchor,constant: -5),
         ])
     }
     

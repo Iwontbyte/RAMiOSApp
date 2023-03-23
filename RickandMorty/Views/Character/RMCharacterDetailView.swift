@@ -80,15 +80,16 @@ extension RMCharacterDetailView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return self.frame.height * 0.5
-        } else {
+            return self.frame.height * 0.55
+        } else if indexPath.section == 1 {
             return  90
+        } else {
+            return 110
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let characterPhotoViewModel = RMCharacterPhotoTableViewCellViewModel(imageUrl: URL(string: viewModel?.image ?? ""))
-        
         switch indexPath.section{
         case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: RMCharacterPhotoTableViewCell.identifier, for: indexPath) as? RMCharacterPhotoTableViewCell else {
@@ -108,6 +109,10 @@ extension RMCharacterDetailView: UITableViewDelegate, UITableViewDataSource {
         case 2:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: RMCharacterEpisodeTableViewCell.identifier, for: indexPath) as? RMCharacterEpisodeTableViewCell else {
                 return UITableViewCell()
+            }
+            if let character = viewModel?.character {
+                let characterEpisodeViewModel = RMCharacterEpisodeTableViewCellViewModel(character:character)
+                cell.configure(with: characterEpisodeViewModel.episode)
             }
             return cell
         default:

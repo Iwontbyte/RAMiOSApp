@@ -9,4 +9,18 @@ import Foundation
 
 class RMCharacterEpisodeTableViewCellViewModel {
     
+    
+    private let character:RMCharacter
+    
+    public var episode: [String] {
+        return character.episode
+    }
+    
+    init(character: RMCharacter) {
+        self.character = character
+    }
+    
+    
+    
+    
 }
