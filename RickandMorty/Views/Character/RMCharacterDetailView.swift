@@ -13,7 +13,6 @@ class RMCharacterDetailView: UIView {
     
     public var viewModel: RMCharacterDetailViewViewModel?
     
-    
     private let tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -31,7 +30,6 @@ class RMCharacterDetailView: UIView {
         addConstraint()
         setupTabelView()
     }
-    
     
     required init?(coder: NSCoder) {
         fatalError("error")

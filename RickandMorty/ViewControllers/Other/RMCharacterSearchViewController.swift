@@ -19,8 +19,6 @@ class RMCharacterSearchViewController: UIViewController {
     
     init() {
         super.init(nibName: nil, bundle: nil)
-//        characterDetialView.viewModel = viewModel
-//        setupView()
         setupViews()
     }
     

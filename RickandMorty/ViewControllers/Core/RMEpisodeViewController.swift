@@ -9,24 +9,27 @@ import UIKit
 
 final class RMEpisodeViewController: UIViewController {
 
+    private let EpisodeListView = RMEpisodeListView()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         self.title = "Episode"
-        
-        
-        RMService.shared.execute(.listEpisodeRequests, expecting: RMGetAllEpisodesResponse.self, completion: { result in
-            switch result {
-            case .success(let model):
-                print(String(describing: model.results))
-                break
-            case .failure(let error):
-                print(String(describing: error))
-            }
-        })
+        setupView()
+    
     }
     
+    private func setupView() {
+        self.view.addSubview(EpisodeListView)
+        NSLayoutConstraint.activate([
+            EpisodeListView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            EpisodeListView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+            EpisodeListView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+            EpisodeListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
 
    
 
