@@ -17,6 +17,8 @@ final class RMCharacterViewController: UIViewController {
         // Do any additional setup after loading the view.
 
         self.title = "Character"
+        let button1 = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(searchCharacter))
+        self.navigationItem.rightBarButtonItem  = button1
         setupView()
        
     }
@@ -30,6 +32,11 @@ final class RMCharacterViewController: UIViewController {
             characterListView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
             characterListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+    
+    @objc func searchCharacter() {
+        let searchCharacterViewController = RMCharacterSearchViewController()
+        navigationController?.pushViewController(searchCharacterViewController, animated: true)
     }
 
 }

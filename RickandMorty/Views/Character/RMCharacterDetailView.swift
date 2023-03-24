@@ -17,6 +17,7 @@ class RMCharacterDetailView: UIView {
     private let tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.separatorStyle = .none
         tableView.register(RMCharacterPhotoTableViewCell.self, forCellReuseIdentifier: RMCharacterPhotoTableViewCell.identifier)
         tableView.register(RMCharacterInfoTableViewCell.self, forCellReuseIdentifier: RMCharacterInfoTableViewCell.identifier)
         tableView.register(RMCharacterEpisodeTableViewCell.self, forCellReuseIdentifier: RMCharacterEpisodeTableViewCell.identifier)
